@@ -1,0 +1,18 @@
+library(ggplot2)
+
+combined_data_clean$Life_scaled <- scales::rescale(combined_data_clean$Life)
+combined_data_clean$Death_scaled <- scales::rescale(combined_data_clean$Death)
+
+ggplot(combined_data_clean, aes(x = Year)) +
+  geom_line(aes(y = Life_scaled, color = "Life Expectancy"), linewidth = 1) +
+  geom_point(aes(y = Life_scaled, color = "Life Expectancy"), size = 2) +
+  geom_line(aes(y = Death_scaled, color = "Death Rate"), linewidth = 1) +
+  geom_point(aes(y = Death_scaled, color = "Death Rate"), size = 2) +
+  facet_wrap(~ group) +
+  scale_color_manual(values = c("blue", "red")) +
+  labs(title = "Normalized Life Expectancy vs Death Rate Over Time",
+       x = "Year", 
+       y = "Normalized Values", 
+       color = "Legend") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
